@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>美股「科技七姐妹」财务与股价全景对比分析报告</title>
+    <style>
+        /* 学术严谨配色方案 - 沉稳深蓝灰色调 */
+        :root {
+            --primary-color: #1a365d;        /* 深海蓝 */
+            --secondary-color: #2d3748;      /* 深灰蓝 */
+            --accent-color: #2b6cb0;         /* 学术蓝 */
+            --text-color: #1a202c;           /* 正文深灰 */
+            --light-bg: #f7fafc;             /* 浅灰背景 */
+            --border-color: #e2e8f0;         /* 边框灰 */
+            --table-header-bg: #edf2f7;      /* 表头背景 */
+            --highlight-bg: #ebf8ff;         /* 高亮背景 */
+            --positive-color: #276749;       /* 正向绿 */
+            --negative-color: #c53030;       /* 负向红 */
+            --warning-color: #c05621;        /* 警示橙 */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", "Helvetica Neue", Arial, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+            font-size: 11pt;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #ffffff;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 60px;
+        }
+
+        /* 封面样式 */
+        .cover {
+            text-align: center;
+            padding: 80px 0 60px 0;
+            border-bottom: 3px solid var(--primary-color);
+            margin-bottom: 40px;
+        }
+
+        .cover h1 {
+            font-size: 24pt;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .cover .subtitle {
+            font-size: 14pt;
+            color: var(--secondary-color);
+            margin-bottom: 40px;
+            font-weight: 500;
+        }
+
+        .cover .meta-info {
+            font-size: 10pt;
+            color: #4a5568;
+            line-height: 1.8;
+            margin-top: 40px;
+        }
+
+        .cover .meta-info strong {
+            color: var(--primary-color);
+        }
+
+        /* 目录样式 */
+        .toc {
+            background-color: var(--light-bg);
+            padding: 30px;
+            margin: 40px 0;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .toc h2 {
+            font-size: 14pt;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .toc li {
+            margin: 8px 0;
+            font-size: 10pt;
+        }
+
+        .toc a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .toc a:hover {
+            color: var(--accent-color);
+        }
+
+        .toc .level-1 {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .toc .level-2 {
+            padding-left: 20px;
+            font-size: 9.5pt;
+        }
+
+        /* 标题样式 */
+        h1 {
+            font-size: 18pt;
+            color: var(--primary-color);
+            margin: 40px 0 20px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--primary-color);
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 14pt;
+            color: var(--secondary-color);
+            margin: 30px 0 15px 0;
+            font-weight: 600;
+        }
+
+        h3 {
+            font-size: 12pt;
+            color: var(--secondary-color);
+            margin: 25px 0 12px 0;
+            font-weight: 600;
+        }
+
+        h4 {
+            font-size: 11pt;
+            color: var(--text-color);
+            margin: 20px 0 10px 0;
+            font-weight: 600;
+        }
+
+        /* 段落样式 */
+        p {
+            margin: 12px 0;
+            text-align: justify;
+        }
+
+        /* 强调样式 */
+        strong {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        em {
+            font-style: italic;
+            color: var(--secondary-color);
+        }
+
+        /* 表格样式 - 学术严谨风格 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 9.5pt;
+        }
+
+        th {
+            background-color: var(--table-header-bg);
+            color: var(--primary-color);
+            font-weight: 600;
+            padding: 10px 8px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        td {
+            padding: 8px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        tr:nth-child(even) {
+            background-color: var(--light-bg);
+        }
+
+        tr:hover {
+            background-color: var(--highlight-bg);
+        }
+
+        /* 指标高亮 */
+        .metric-highlight {
+            background-color: var(--highlight-bg);
+            padding: 2px 6px;
+            font-weight: 600;
+        }
+
+        .best {
+            color: var(--positive-color);
+            font-weight: 700;
+        }
+
+        .worst {
+            color: var(--negative-color);
+            font-weight: 700;
+        }
+
+        .neutral {
+            color: var(--warning-color);
+            font-weight: 600;
+        }
+
+        /* 数据卡片 */
+        .data-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .data-card {
+            background-color: var(--light-bg);
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            text-align: center;
+        }
+
+        .data-card .label {
+            font-size: 9pt;
+            color: #718096;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .data-card .value {
+            font-size: 18pt;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .data-card .unit {
+            font-size: 9pt;
+            color: #718096;
+        }
+
+        /* 图表容器 */
+        .figure {
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .figure img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .figure-caption {
+            font-size: 9.5pt;
+            color: #4a5568;
+            margin-top: 10px;
+            font-style: italic;
+            text-align: center;
+        }
+
+        /* 分析框 */
+        .analysis-box {
+            background-color: var(--light-bg);
+            border-left: 4px solid var(--accent-color);
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .analysis-box h4 {
+            color: var(--accent-color);
+            margin-top: 0;
+        }
+
+        /* 公式样式 */
+        .formula {
+            background-color: #f8f9fa;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+            font-family: "Times New Roman", serif;
+            font-style: italic;
+            text-align: center;
+            color: var(--secondary-color);
+        }
+
+        /* 列表样式 */
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        /* 关键发现框 */
+        .key-findings {
+            background-color: #fffaf0;
+            border: 1px solid #ed8936;
+            border-left: 4px solid #ed8936;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .key-findings h4 {
+            color: #c05621;
+            margin-top: 0;
+        }
+
+        /* 风险提示框 */
+        .risk-warning {
+            background-color: #fff5f5;
+            border: 1px solid var(--negative-color);
+            border-left: 4px solid var(--negative-color);
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .risk-warning h4 {
+            color: var(--negative-color);
+            margin-top: 0;
+        }
+
+        /* 分隔线 */
+        hr {
+            border: none;
+            border-top: 1px solid var(--border-color);
+            margin: 30px 0;
+        }
+
+        /* 页脚 */
+        .footer {
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            font-size: 9pt;
+            color: #718096;
+            text-align: center;
+        }
+
+        /* 引用块 */
+        blockquote {
+            border-left: 3px solid var(--accent-color);
+            padding-left: 20px;
+            margin: 20px 0;
+            color: var(--secondary-color);
+            font-style: italic;
+        }
+
+        /* 行内代码 */
+        code {
+            background-color: var(--light-bg);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: "Consolas", "Monaco", monospace;
+            font-size: 10pt;
+            color: var(--secondary-color);
+        }
+
+        /* 页面分节 */
+        .section {
+            margin-bottom: 40px;
+        }
+
+        /* 执行摘要框 */
+        .executive-summary {
+            background: linear-gradient(135deg, var(--light-bg) 0%, #ffffff 100%);
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .executive-summary h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+        }
+
+        /* 股票标签 */
+        .ticker {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-weight: 600;
+            font-size: 9pt;
+        }
+
+        /* 星级评分 */
+        .stars {
+            color: #d69e2e;
+            font-size: 10pt;
+        }
+
+        /* 打印优化 */
+        @media print {
+            body {
+                padding: 20px 40px;
+                max-width: none;
+            }
+            
+            .toc {
+                page-break-after: always;
+            }
+            
+            h1 {
+                page-break-before: always;
+            }
+            
+            h1:first-of-type {
+                page-break-before: avoid;
+            }
+            
+            .figure {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- 封面 -->
+<div class="cover">
+    <h1>美股「科技七姐妹」财务与股价全景对比分析报告</h1>
+    <div class="subtitle">基于2021-2026年日度数据的实证研究</div>
+    
+    <div class="meta-info">
+        <strong>课程：</strong>数据分析与经济决策（ds2026）<br>
+        <strong>研究题目：</strong>T-A2 美股「七姐妹」财务与股价全景对比<br>
+        <strong>小组：</strong>第七组<br>
+        <strong>组长：</strong>莫才有（7125210211）<br>
+        <strong>报告日期：</strong>2026年5月16日<br>
+        <strong>GitHub：</strong>https://github.com/ZDC3/ds2026-G07-Magnificent-7
+    </div>
+</div>
+
+<!-- 目录 -->
+<div class="toc">
+    <h2>目录</h2>
+    <ul>
+        <li class="level-1"><a href="#sec1">1. 执行摘要</a></li>
+        <li class="level-1"><a href="#sec2">2. 研究背景与目标</a></li>
+        <li class="level-2"><a href="#sec2-1">2.1 研究对象说明</a></li>
+        <li class="level-2"><a href="#sec2-2">2.2 研究目标</a></li>
+        <li class="level-1"><a href="#sec3">3. 数据与方法</a></li>
+        <li class="level-2"><a href="#sec3-1">3.1 数据来源</a></li>
+        <li class="level-2"><a href="#sec3-2">3.2 指标计算方法</a></li>
+        <li class="level-1"><a href="#sec4">4. 实证结果与分析</a></li>
+        <li class="level-2"><a href="#sec4-1">4.1 股价走势与累计收益</a></li>
+        <li class="level-2"><a href="#sec4-2">4.2 年度收益分布特征</a></li>
+        <li class="level-2"><a href="#sec4-3">4.3 风险-收益特征</a></li>
+        <li class="level-2"><a href="#sec4-4">4.4 估值水平分析</a></li>
+        <li class="level-2"><a href="#sec4-5">4.5 相关性结构</a></li>
+        <li class="level-2"><a href="#sec4-6">4.6 超额收益分析</a></li>
+        <li class="level-1"><a href="#sec5">5. 投资组合分析</a></li>
+        <li class="level-1"><a href="#sec6">6. 结论与建议</a></li>
+        <li class="level-1"><a href="#sec7">7. 研究局限</a></li>
+    </ul>
+</div>
+
+<!-- 执行摘要 -->
+<div class="executive-summary" id="sec1">
+    <h2>1. 执行摘要</h2>
+    
+    <p><strong>研究期间：</strong>2021年5月17日至2026年5月15日（近5年日度数据）</p>
+    <p><strong>研究对象：</strong>美股「科技七姐妹」（AAPL、MSFT、NVDA、GOOGL、AMZN、META、TSLA）</p>
+    
+    <div class="data-cards">
+        <div class="data-card">
+            <div class="label">累计涨幅最高</div>
+            <div class="value best">NVDA</div>
+            <div class="unit">5年涨幅超500%</div>
+        </div>
+        <div class="data-card">
+            <div class="label">夏普比率最高</div>
+            <div class="value best">1.25</div>
+            <div class="unit">风险调整后收益最优</div>
+        </div>
+        <div class="data-card">
+            <div class="label">波动率最高</div>
+            <div class="value worst">58.91%</div>
+            <div class="unit">TSLA年化波动</div>
+        </div>
+        <div class="data-card">
+            <div class="label">平均相关系数</div>
+            <div class="value neutral">0.52</div>
+            <div class="unit">板块内相关性较高</div>
+        </div>
+    </div>
+
+    <h3>核心发现</h3>
+    <table>
+        <tr>
+            <th>维度</th>
+            <th>关键发现</th>
+        </tr>
+        <tr>
+            <td><strong>累计收益</strong></td>
+            <td>NVDA以68.87%年化收益显著领先，AMZN以15.89%垫底</td>
+        </tr>
+        <tr>
+            <td><strong>风险收益比</strong></td>
+            <td>NVDA夏普比率1.25居首，AMZN仅0.32性价比最差</td>
+        </tr>
+        <tr>
+            <td><strong>估值水平</strong></td>
+            <td>TSLA PE高达383.85倍，META仅22.32倍估值最低</td>
+        </tr>
+        <tr>
+            <td><strong>超额收益</strong></td>
+            <td>七只股票全部跑赢标普500，NVDA超额收益达55.87%</td>
+        </tr>
+        <tr>
+            <td><strong>相关性</strong></td>
+            <td>AMZN-MSFT相关性最高(0.62)，META-TSLA最低(0.34)</td>
+        </tr>
+    </table>
+
+    <div class="key-findings">
+        <h4>投资建议</h4>
+        <p>基于风险收益特征与估值水平，建议采用<strong>「稳健平台型 + 高成长」</strong>分层配置策略：</p>
+        <ul>
+            <li><strong>稳健层（40-60%）：</strong>MSFT、AAPL、GOOGL，夏普比率>0.6，波动率<35%</li>
+            <li><strong>成长层（30-40%）：</strong>NVDA、META，营收增速>30%，但需承受高波动</li>
+            <li><strong>卫星层（0-20%）：</strong>TSLA、AMZN，当前性价比一般，但存在事件驱动机会</li>
+        </ul>
+    </div>
+</div>
+
+<!-- 研究背景 -->
+<div class="section" id="sec2">
+    <h1>2. 研究背景与目标</h1>
+    
+    <h2 id="sec2-1">2.1 研究对象说明</h2>
+    
+    <p>「科技七姐妹」（Magnificent 7）是近年来全球资本市场的核心关注标的，包括苹果（<span class="ticker">AAPL</span>）、微软（<span class="ticker">MSFT</span>）、英伟达（<span class="ticker">NVDA</span>）、Alphabet（<span class="ticker">GOOGL</span>）、亚马逊（<span class="ticker">AMZN</span>）、Meta（<span class="ticker">META</span>）、特斯拉（<span class="ticker">TSLA</span>）。这七家公司合计市值一度超过全球多数国家的GDP总量，是理解美国股市乃至全球科技产业发展的关键窗口。</p>
+
+    <table>
+        <tr>
+            <th>公司</th>
+            <th>股票代码</th>
+            <th>核心业务领域</th>
+            <th>市值（亿美元）</th>
+        </tr>
+        <tr>
+            <td>Apple Inc.</td>
+            <td><span class="ticker">AAPL</span></td>
+            <td>消费电子、服务生态</td>
+            <td>44,095.85</td>
+        </tr>
+        <tr>
+            <td>Microsoft Corporation</td>
+            <td><span class="ticker">MSFT</span></td>
+            <td>云计算、企业软件</td>
+            <td>31,342.05</td>
+        </tr>
+        <tr>
+            <td class="best">NVIDIA Corporation</td>
+            <td><span class="ticker">NVDA</span></td>
+            <td>AI芯片、数据中心</td>
+            <td class="best">54,573.69</td>
+        </tr>
+        <tr>
+            <td>Alphabet Inc.</td>
+            <td><span class="ticker">GOOGL</span></td>
+            <td>搜索、广告、云计算</td>
+            <td>48,071.66</td>
+        </tr>
+        <tr>
+            <td>Amazon.com, Inc.</td>
+            <td><span class="ticker">AMZN</span></td>
+            <td>电商、云计算</td>
+            <td>28,413.83</td>
+        </tr>
+        <tr>
+            <td>Meta Platforms, Inc.</td>
+            <td><span class="ticker">META</span></td>
+            <td>社交媒体、元宇宙</td>
+            <td>15,591.76</td>
+        </tr>
+        <tr>
+            <td>Tesla, Inc.</td>
+            <td><span class="ticker">TSLA</span></td>
+            <td>电动汽车、能源</td>
+            <td>15,858.17</td>
+        </tr>
+    </table>
+
+    <h2 id="sec2-2">2.2 研究目标</h2>
+    
+    <p>本研究旨在通过完整的数据分析流程，实现以下学术与实践目标：</p>
+    
+    <ol>
+        <li><strong>数据获取能力训练：</strong>使用yfinance API批量获取多资产时序数据与财务指标</li>
+        <li><strong>数据清洗与质量控制：</strong>建立标准化的数据清洗流程，处理缺失值、异常值与格式统一</li>
+        <li><strong>指标体系构建：</strong>计算收益率、风险指标、估值指标等多维度分析指标</li>
+        <li><strong>可视化呈现：</strong>制作专业级金融分析图表，清晰传达研究发现</li>
+        <li><strong>投资洞察提炼：</strong>基于数据分析提炼可验证的投资观点与风险提示</li>
+    </ol>
+</div>
+
+<!-- 数据与方法 -->
+<div class="section" id="sec3">
+    <h1>3. 数据与方法</h1>
+    
+    <h2 id="sec3-1">3.1 数据来源与质量控制</h2>
+    
+    <p><strong>数据源：</strong>Yahoo Finance（通过yfinance Python库）</p>
+    
+    <table>
+        <tr>
+            <th>数据类型</th>
+            <th>详细说明</th>
+            <th>时间范围</th>
+        </tr>
+        <tr>
+            <td>股价数据</td>
+            <td>日度收盘价（已复权处理）</td>
+            <td>2021-05-17 至 2026-05-15</td>
+        </tr>
+        <tr>
+            <td>财务摘要</td>
+            <td>PE、PB、市值、营收增速等</td>
+            <td>截至2026-05-16</td>
+        </tr>
+        <tr>
+            <td>基准指数</td>
+            <td>标普500日度收盘价（^GSPC）</td>
+            <td>同期对齐</td>
+        </tr>
+    </table>
+
+    <div class="analysis-box">
+        <h4>数据质量初检结果</h4>
+        <table>
+            <tr>
+                <th>检查项</th>
+                <th>结果</th>
+                <th>说明</th>
+            </tr>
+            <tr>
+                <td>交易日数量</td>
+                <td>1,258个交易日</td>
+                <td>约5年完整覆盖</td>
+            </tr>
+            <tr>
+                <td>缺失值检查</td>
+                <td>最大缺失率0.00%</td>
+                <td>节假日缺失已前向填充</td>
+            </tr>
+            <tr>
+                <td>价格有效性</td>
+                <td>无负值/零值</td>
+                <td>数据合理性通过</td>
+            </tr>
+            <tr>
+                <td>重复日期</td>
+                <td>0条</td>
+                <td>无重复记录</td>
+            </tr>
+        </table>
+    </div>
+
+    <h2 id="sec3-2">3.2 指标计算方法</h2>
+    
+    <h3>3.2.1 收益类指标</h3>
+    
+    <p><strong>年化收益率（Annualized Return）：</strong></p>
+    <div class="formula">
+        年化收益率 = R̄<sub>daily</sub> × 252
+    </div>
+    <p>其中，R̄<sub>daily</sub>为日度收益率样本均值，252为年化交易日数（美国市场惯例）。</p>
+    
+    <h3>3.2.2 风险类指标</h3>
+    
+    <p><strong>年化波动率（Annualized Volatility）：</strong></p>
+    <div class="formula">
+        σ<sub>annual</sub> = σ<sub>daily</sub> × √252
+    </div>
+    
+    <p><strong>最大回撤（Maximum Drawdown）：</strong></p>
+    <div class="formula">
+        MDD = min[(V<sub>t</sub> - max(V<sub>1:t</sub>)) / max(V<sub>1:t</sub>)]
+    </div>
+    <p>其中，V<sub>t</sub>为累计收益序列，max(V<sub>1:t</sub>)为截至t日的历史最高值。</p>
+    
+    <h3>3.2.3 风险调整后收益指标</h3>
+    
+    <p><strong>夏普比率（Sharpe Ratio）：</strong></p>
+    <div class="formula">
+        Sharpe = (R<sub>p</sub> - R<sub>f</sub>) / σ<sub>p</sub>
+    </div>
+    <p>参数设置：R<sub>f</sub> = 4.5%（当前美国短期国债水平）</p>
+</div>
+
+<!-- 实证结果 -->
+<div class="section" id="sec4">
+    <h1>4. 实证结果与分析</h1>
+    
+    <h2 id="sec4-1">4.1 股价走势与累计收益</h2>
+    
+    <div class="figure">
+        <img src="fig_price_trend.png" alt="标准化股价走势图" style="max-width: 800px;">
+        <div class="figure-caption">图1：七姐妹标准化股价走势（基期=1，2021-2026）</div>
+    </div>
+    
+    <p><strong>累计收益排名（5年期）：</strong></p>
+    
+    <table>
+        <tr>
+            <th>排名</th>
+            <th>股票</th>
+            <th>5年累计涨幅</th>
+            <th>表现解读</th>
+        </tr>
+        <tr>
+            <td class="best">1</td>
+            <td class="best">NVDA</td>
+            <td class="best">约6.9倍</td>
+            <td>AI算力爆发核心受益者，数据中心需求激增</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>TSLA</td>
+            <td>约2.0倍</td>
+            <td>电动车渗透率提升，但波动剧烈</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>GOOGL</td>
+            <td>约1.7倍</td>
+            <td>搜索广告+云业务稳健增长</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>META</td>
+            <td>约1.6倍</td>
+            <td>2022年深度回调后强劲反弹</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>AAPL</td>
+            <td>约1.5倍</td>
+            <td>稳健增长，服务收入占比提升</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>MSFT</td>
+            <td>约1.4倍</td>
+            <td>Azure云业务驱动，但涨幅落后</td>
+        </tr>
+        <tr>
+            <td class="worst">7</td>
+            <td class="worst">AMZN</td>
+            <td class="worst">约1.3倍</td>
+            <td>电商增速放缓，AWS增速回落</td>
+        </tr>
+    </table>
+    
+    <div class="analysis-box">
+        <h4>关键观察点</h4>
+        <ul>
+            <li><strong>2022年普跌：</strong>加息周期导致科技股估值普遍压缩，七只股票均出现显著回撤</li>
+            <li><strong>2023年分化反弹：</strong>AI主题带动NVDA爆发式增长，其他股票修复节奏各异</li>
+            <li><strong>事件驱动：</strong>NVDA暴涨源于ChatGPT引发的AI军备竞赛，数据中心GPU需求井喷</li>
+        </ul>
+    </div>
+
+    <h2 id="sec4-2">4.2 年度收益分布特征</h2>
+    
+    <div class="figure">
+        <img src="fig_return_heatmap.png" alt="年度收益率热力图" style="max-width: 800px;">
+        <div class="figure-caption">图2：七姐妹年度收益率热力图（%）</div>
+    </div>
+    
+    <p><strong>年度收益矩阵（%）：</strong></p>
+    
+    <table>
+        <tr>
+            <th>年份</th>
+            <th>AAPL</th>
+            <th>AMZN</th>
+            <th>GOOGL</th>
+            <th>META</th>
+            <th>MSFT</th>
+            <th>NVDA</th>
+            <th>TSLA</th>
+        </tr>
+        <tr>
+            <td>2021</td>
+            <td>41.04</td>
+            <td>1.96</td>
+            <td>26.57</td>
+            <td>6.62</td>
+            <td>38.00</td>
+            <td class="best">107.73</td>
+            <td>83.20</td>
+        </tr>
+        <tr>
+            <td>2022</td>
+            <td>-26.40</td>
+            <td>-49.62</td>
+            <td>-39.09</td>
+            <td class="worst">-64.22</td>
+            <td>-28.02</td>
+            <td>-50.26</td>
+            <td>-65.03</td>
+        </tr>
+        <tr>
+            <td>2023</td>
+            <td>49.01</td>
+            <td>80.88</td>
+            <td>58.32</td>
+            <td class="best">194.13</td>
+            <td>58.19</td>
+            <td class="best">239.02</td>
+            <td>101.72</td>
+        </tr>
+        <tr>
+            <td>2024</td>
+            <td>30.71</td>
+            <td>44.39</td>
+            <td>36.01</td>
+            <td>66.05</td>
+            <td>12.93</td>
+            <td>171.25</td>
+            <td>62.52</td>
+        </tr>
+        <tr>
+            <td>2025</td>
+            <td>9.05</td>
+            <td>5.21</td>
+            <td class="best">65.99</td>
+            <td>13.09</td>
+            <td>-12.56</td>
+            <td>38.92</td>
+            <td>11.36</td>
+        </tr>
+        <tr>
+            <td>2026</td>
+            <td>10.64</td>
+            <td>14.44</td>
+            <td>26.86</td>
+            <td>-6.87</td>
+            <td>-12.56</td>
+            <td>20.82</td>
+            <td>-6.11</td>
+        </tr>
+    </table>
+    
+    <div class="key-findings">
+        <h4>关键发现</h4>
+        <ul>
+            <li><strong>2022年集体重挫：</strong>加息+估值压缩，META跌幅最大（-64.22%），七只全线下跌</li>
+            <li><strong>2023年强劲反弹：</strong>AI主题+降息预期，META反弹194%居首，NVDA涨239%</li>
+            <li><strong>波动性差异：</strong>TSLA、NVDA、META单年涨跌幅度最大，AAPL、MSFT相对稳健</li>
+        </ul>
+    </div>
+
+    <h2 id="sec4-3">4.3 风险-收益特征</h2>
+    
+    <div class="figure">
+        <img src="fig_risk_return.png" alt="风险-收益散点图" style="max-width: 700px;">
+        <div class="figure-caption">图3：风险-收益分布（横轴：年化波动率，纵轴：年化收益率）</div>
+    </div>
+    
+    <p><strong>风险收益指标表：</strong></p>
+    
+    <table>
+        <tr>
+            <th>股票</th>
+            <th>年化收益率(%)</th>
+            <th>年化波动率(%)</th>
+            <th>最大回撤(%)</th>
+            <th>夏普比率</th>
+            <th>评级</th>
+        </tr>
+        <tr>
+            <td>AAPL</td>
+            <td>21.66</td>
+            <td>27.45</td>
+            <td>-33.36</td>
+            <td>0.63</td>
+            <td><span class="stars">⭐</span></td>
+        </tr>
+        <tr>
+            <td>AMZN</td>
+            <td>15.89</td>
+            <td>35.41</td>
+            <td>-56.15</td>
+            <td class="worst">0.32</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>GOOGL</td>
+            <td>30.00</td>
+            <td>31.23</td>
+            <td>-44.32</td>
+            <td class="best">0.82</td>
+            <td><span class="stars">⭐⭐</span></td>
+        </tr>
+        <tr>
+            <td>META</td>
+            <td>23.27</td>
+            <td>43.89</td>
+            <td class="worst">-76.74</td>
+            <td>0.43</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>MSFT</td>
+            <td>15.21</td>
+            <td class="best">26.37</td>
+            <td>-37.15</td>
+            <td>0.41</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td class="best">NVDA</td>
+            <td class="best">68.87</td>
+            <td>51.68</td>
+            <td>-66.34</td>
+            <td class="best">1.25</td>
+            <td><span class="stars">⭐⭐⭐</span></td>
+        </tr>
+        <tr>
+            <td>TSLA</td>
+            <td>33.05</td>
+            <td class="worst">58.91</td>
+            <td>-73.63</td>
+            <td>0.48</td>
+            <td></td>
+        </tr>
+    </table>
+    
+    <div class="analysis-box">
+        <h4>四象限分析</h4>
+        <p>以中位数为界（收益率24.27%，波动率31.23%）划分：</p>
+        <table>
+            <tr>
+                <th>象限</th>
+                <th>股票</th>
+                <th>特征描述</th>
+            </tr>
+            <tr>
+                <td>高收低波（理想）</td>
+                <td>GOOGL</td>
+                <td>收益高于中位数，波动低于中位数，性价比最优</td>
+            </tr>
+            <tr>
+                <td>高收高波（激进）</td>
+                <td>NVDA、TSLA、META</td>
+                <td>高收益但伴随高波动，适合风险承受能力强的投资者</td>
+            </tr>
+            <tr>
+                <td>低收低波（稳健）</td>
+                <td>AAPL、MSFT</td>
+                <td>波动较低但收益亦较低，防御属性</td>
+            </tr>
+            <tr>
+                <td class="worst">低收高波（回避）</td>
+                <td class="worst">AMZN</td>
+                <td>波动高但收益补偿不足，风险收益比最差</td>
+            </tr>
+        </table>
+    </div>
+
+    <h2 id="sec4-4">4.4 估值水平分析</h2>
+    
+    <div class="figure">
+        <img src="fig_valuation.png" alt="估值指标对比" style="max-width: 700px;">
+        <div class="figure-caption">图4：七姐妹PE与PB估值对比</div>
+    </div>
+    
+    <p><strong>财务指标详细表：</strong></p>
+    
+    <table>
+        <tr>
+            <th>股票</th>
+            <th>PE</th>
+            <th>PB</th>
+            <th>市值(亿美元)</th>
+            <th>营收增速(%)</th>
+            <th>毛利率(%)</th>
+            <th>ROE(%)</th>
+        </tr>
+        <tr>
+            <td>AAPL</td>
+            <td>36.35</td>
+            <td class="worst">41.35</td>
+            <td>44,095.85</td>
+            <td>16.6</td>
+            <td>47.86</td>
+            <td class="best">141.47</td>
+        </tr>
+        <tr>
+            <td>MSFT</td>
+            <td>25.13</td>
+            <td>7.56</td>
+            <td>31,342.05</td>
+            <td>18.3</td>
+            <td>68.31</td>
+            <td>34.01</td>
+        </tr>
+        <tr>
+            <td>NVDA</td>
+            <td>46.08</td>
+            <td>34.81</td>
+            <td class="best">54,573.69</td>
+            <td class="best">73.2</td>
+            <td>71.07</td>
+            <td>101.48</td>
+        </tr>
+        <tr>
+            <td>GOOGL</td>
+            <td>30.31</td>
+            <td>10.04</td>
+            <td>48,071.66</td>
+            <td>21.8</td>
+            <td>60.37</td>
+            <td>38.88</td>
+        </tr>
+        <tr>
+            <td>AMZN</td>
+            <td>31.63</td>
+            <td>6.43</td>
+            <td>28,413.83</td>
+            <td>16.6</td>
+            <td>50.60</td>
+            <td>24.28</td>
+        </tr>
+        <tr>
+            <td class="best">META</td>
+            <td class="best">22.32</td>
+            <td class="best">6.40</td>
+            <td>15,591.76</td>
+            <td>33.1</td>
+            <td class="best">81.94</td>
+            <td>32.93</td>
+        </tr>
+        <tr>
+            <td class="worst">TSLA</td>
+            <td class="worst">383.85</td>
+            <td>19.28</td>
+            <td>15,858.17</td>
+            <td>15.8</td>
+            <td>19.06</td>
+            <td class="worst">4.90</td>
+        </tr>
+    </table>
+    
+    <div class="risk-warning">
+        <h4>估值风险提示</h4>
+        <p><strong>TSLA估值畸高：</strong>PE高达383.85倍，远超其他股票，需持续高增长才能消化估值，若增速不及预期，估值压缩风险极大。</p>
+    </div>
+
+    <h2 id="sec4-5">4.5 相关性结构</h2>
+    
+    <div class="figure">
+        <img src="fig_correlation_heatmap.png" alt="相关性热力图" style="max-width: 700px;">
+        <div class="figure-caption">图5：收益率相关系数矩阵热力图</div>
+    </div>
+    
+    <p><strong>相关系数统计：</strong></p>
+    
+    <table>
+        <tr>
+            <th>统计量</th>
+            <th>数值</th>
+            <th>含义</th>
+        </tr>
+        <tr>
+            <td>平均相关系数</td>
+            <td>0.52</td>
+            <td>整体相关性较高</td>
+        </tr>
+        <tr>
+            <td>最高相关对</td>
+            <td class="worst">AMZN-MSFT (0.62)</td>
+            <td>云计算业务重叠</td>
+        </tr>
+        <tr>
+            <td>最低相关对</td>
+            <td class="best">META-TSLA (0.34)</td>
+            <td>业务属性差异大</td>
+        </tr>
+    </table>
+    
+    <div class="analysis-box">
+        <h4>分散化效应评估</h4>
+        <ul>
+            <li><strong>正相关主导：</strong>所有相关系数为正，说明七只股票同涨同跌趋势明显</li>
+            <li><strong>板块暴露集中：</strong>组合主要暴露在科技板块β风险上</li>
+            <li><strong>有限分散化价值：</strong>七只股票组合波动率（29.81%）仅略低于简单平均（约40%）</li>
+        </ul>
+    </div>
+
+    <h2 id="sec4-6">4.6 超额收益分析</h2>
+    
+    <div class="figure">
+        <img src="fig_alpha.png" alt="超额收益对比" style="max-width: 700px;">
+        <div class="figure-caption">图6：相对标普500的超额收益（Alpha）</div>
+    </div>
+    
+    <p><strong>超额收益计算结果：</strong></p>
+    
+    <table>
+        <tr>
+            <th>排名</th>
+            <th>股票</th>
+            <th>年化收益率(%)</th>
+            <th>标普500收益率(%)</th>
+            <th>超额收益(%)</th>
+            <th>评级</th>
+        </tr>
+        <tr>
+            <td class="best">1</td>
+            <td class="best">NVDA</td>
+            <td class="best">68.87</td>
+            <td>12.99</td>
+            <td class="best">+55.87</td>
+            <td><span class="stars">⭐⭐⭐⭐⭐</span></td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>TSLA</td>
+            <td>33.05</td>
+            <td>12.99</td>
+            <td>+20.05</td>
+            <td><span class="stars">⭐⭐⭐</span></td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>GOOGL</td>
+            <td>30.00</td>
+            <td>12.99</td>
+            <td>+17.01</td>
+            <td><span class="stars">⭐⭐⭐</span></td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>META</td>
+            <td>23.27</td>
+            <td>12.99</td>
+            <td>+10.28</td>
+            <td><span class="stars">⭐⭐</span></td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>AAPL</td>
+            <td>21.66</td>
+            <td>12.99</td>
+            <td>+8.67</td>
+            <td><span class="stars">⭐⭐</span></td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>AMZN</td>
+            <td>15.89</td>
+            <td>12.99</td>
+            <td>+2.90</td>
+            <td><span class="stars">⭐</span></td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td>MSFT</td>
+            <td>15.21</td>
+            <td>12.99</td>
+            <td>+2.22</td>
+            <td><span class="stars">⭐</span></td>
+        </tr>
+    </table>
+    
+    <div class="key-findings">
+        <h4>超额收益来源分析</h4>
+        <ul>
+            <li><strong>NVDA（+55.87%）：</strong>AI算力垄断，数据中心GPU需求爆发，市场份额超80%</li>
+            <li><strong>TSLA（+20.05%）：</strong>电动车先发优势，品牌溢价+垂直整合+FSD技术储备</li>
+            <li><strong>GOOGL（+17.01%）：</strong>搜索广告回暖+GCP增速领先</li>
+        </ul>
+    </div>
+</div>
+
+<!-- 投资组合分析 -->
+<div class="section" id="sec5">
+    <h1>5. 投资组合分析</h1>
+    
+    <h2>5.1 等权组合测算</h2>
+    
+    <p>假设构建七只股票等权组合（每只权重14.29%）：</p>
+    
+    <table>
+        <tr>
+            <th>指标</th>
+            <th>等权组合</th>
+            <th>平均个股</th>
+            <th>说明</th>
+        </tr>
+        <tr>
+            <td>年化收益率</td>
+            <td class="metric-highlight">29.71%</td>
+            <td>29.71%</td>
+            <td>算术平均</td>
+        </tr>
+        <tr>
+            <td>年化波动率</td>
+            <td class="metric-highlight">29.81%</td>
+            <td>39.34%</td>
+            <td>分散化降低波动24%</td>
+        </tr>
+        <tr>
+            <td>夏普比率</td>
+            <td class="metric-highlight">0.85</td>
+            <td>-</td>
+            <td>组合风险调整后收益</td>
+        </tr>
+        <tr>
+            <td>最大回撤</td>
+            <td class="metric-highlight">-44.32%</td>
+            <td>-54.07%</td>
+            <td>分散化降低回撤18%</td>
+        </tr>
+    </table>
+    
+    <h2>5.2 分层配置策略</h2>
+    
+    <h3>稳健层（核心持仓 40-60%）</h3>
+    
+    <table>
+        <tr>
+            <th>股票</th>
+            <th>建议权重</th>
+            <th>配置理由</th>
+        </tr>
+        <tr>
+            <td>MSFT</td>
+            <td>15-20%</td>
+            <td>波动最低（26.37%），云业务稳健，适合打底</td>
+        </tr>
+        <tr>
+            <td>AAPL</td>
+            <td>15-20%</td>
+            <td>ROE最高（141.47%），现金流充沛，防御属性</td>
+        </tr>
+        <tr>
+            <td>GOOGL</td>
+            <td>10-20%</td>
+            <td>夏普比率第二（0.82），估值合理（PE 30.31）</td>
+        </tr>
+    </table>
+    
+    <p><strong>稳健层特征：</strong>夏普比率>0.6，波动率<35%，PE<40</p>
+    
+    <h3>成长层（进攻持仓 30-40%）</h3>
+    
+    <table>
+        <tr>
+            <th>股票</th>
+            <th>建议权重</th>
+            <th>配置理由</th>
+        </tr>
+        <tr>
+            <td>NVDA</td>
+            <td>15-25%</td>
+            <td>夏普比率最高（1.25），AI主题核心，但波动高</td>
+        </tr>
+        <tr>
+            <td>META</td>
+            <td>10-15%</td>
+            <td>估值最低（PE 22.32），毛利率最高（81.94%），反弹弹性大</td>
+        </tr>
+    </table>
+    
+    <p><strong>成长层特征：</strong>营收增速>30%，但波动率>40%</p>
+    
+    <h3>卫星层（战术持仓 0-20%）</h3>
+    
+    <table>
+        <tr>
+            <th>股票</th>
+            <th>建议权重</th>
+            <th>配置理由</th>
+        </tr>
+        <tr>
+            <td>TSLA</td>
+            <td>0-10%</td>
+            <td>高波动（58.91%），适合短线交易，长期性价比一般</td>
+        </tr>
+        <tr>
+            <td>AMZN</td>
+            <td>0-10%</td>
+            <td>夏普比率最低（0.32），需等待基本面拐点确认</td>
+        </tr>
+    </table>
+</div>
+
+<!-- 结论与建议 -->
+<div class="section" id="sec6">
+    <h1>6. 结论与建议</h1>
+    
+    <h2>6.1 主要结论</h2>
+    
+    <ol>
+        <li><strong>收益分化显著：</strong>NVDA以68.87%年化收益遥遥领先，AMZN仅15.89%垫底，AI算力主题是本轮周期的核心α来源。</li>
+        <li><strong>风险收益匹配度差异大：</strong>NVDA夏普比率1.25为最优，AMZN仅0.32性价比最差，TSLA呈现"高风险、收益补偿不完全"特征。</li>
+        <li><strong>估值水平分化：</strong>TSLA PE高达383.85倍已透支未来增长，META PE仅22.32倍估值性价比突出。</li>
+        <li><strong>板块相关性高：</strong>平均相关系数0.52，组合分散化效果有限，主要暴露在科技板块β风险上。</li>
+        <li><strong>全部跑赢大盘：</strong>七只股票5年期全部跑赢标普500，NVDA超额收益达55.87%，验证科技股α能力。</li>
+    </ol>
+    
+    <h2>6.2 投资建议</h2>
+    
+    <div class="key-findings">
+        <h4>配置建议</h4>
+        <p>基于收益、风险与估值三维指标，建议采用<strong>「稳健平台型 + 高成长」</strong>分层配置策略：</p>
+        <ul>
+            <li><strong>稳健层（40-60%）：</strong>MSFT、AAPL、GOOGL，夏普比率>0.6，波动率<35%，防御属性强</li>
+            <li><strong>成长层（30-40%）：</strong>NVDA、META，营收增速>30%，但需承受高波动</li>
+            <li><strong>卫星层（0-20%）：</strong>TSLA、AMZN，当前性价比一般，关注事件驱动机会</li>
+        </ul>
+    </div>
+    
+    <div class="risk-warning">
+        <h4>风险提示</h4>
+        <ol>
+            <li><strong>估值风险：</strong>TSLA PE高达383.85倍，若增速不及预期，估值压缩风险大</li>
+            <li><strong>集中度风险：</strong>七只股票均属于科技板块，系统性风险分散有限</li>
+            <li><strong>宏观风险：</strong>加息周期中科技股估值承压，需关注美联储政策走向</li>
+            <li><strong>个股风险：</strong>NVDA涨幅过大，若AI需求降温，回调幅度可能较大</li>
+        </ol>
+    </div>
+</div>
+
+<!-- 研究局限 -->
+<div class="section" id="sec7">
+    <h1>7. 研究局限与展望</h1>
+    
+    <h2>7.1 研究局限</h2>
+    
+    <table>
+        <tr>
+            <th>局限类别</th>
+            <th>具体说明</th>
+        </tr>
+        <tr>
+            <td>数据来源局限</td>
+            <td>yfinance财务字段口径因公司而异，不同公司会计处理存在差异</td>
+        </tr>
+        <tr>
+            <td>样本期局限</td>
+            <td>5年样本期较短，未覆盖完整经济周期（如2008金融危机）</td>
+        </tr>
+        <tr>
+            <td>指标单一性</td>
+            <td>仅使用价格数据，未纳入期权市场隐含波动率等信息</td>
+        </tr>
+        <tr>
+            <td>汇率因素</td>
+            <td>未考虑美元兑人民币汇率对人民币投资者的实际收益影响</td>
+        </tr>
+        <tr>
+            <td>历史数据时滞</td>
+            <td>财务数据存在更新时滞，可能无法反映最新季度业绩</td>
+        </tr>
+    </table>
+    
+    <h2>7.2 后续研究方向</h2>
+    
+    <ol>
+        <li><strong>多因子模型扩展：</strong>加入Fama-French三因子/五因子分析，纳入动量因子、质量因子等风格因子暴露</li>
+        <li><strong>事件驱动分析：</strong>财报发布前后超额收益分析，美联储议息会议对板块影响，AI相关政策事件影响</li>
+        <li><strong>国际比较视角：</strong>与A股科技板块（科创50）、欧洲科技板块（STOXX Europe 600 Technology）对比</li>
+        <li><strong>ESG整合分析：</strong>纳入ESG评级数据，分析ESG因子与风险收益的关系</li>
+    </ol>
+</div>
+
+<hr>
+
+<!-- 页脚 -->
+<div class="footer">
+    <p><strong>第七组（G07）</strong> | 组长：莫才有（7125210211）</p>
+    <p>成员：刘帆、王天正、许玲敏、高世杰、曾垂健、廖晟可</p>
+    <p>课程：数据分析与经济决策（ds2026） | 报告日期：2026年5月16日</p>
+    <p>GitHub：https://github.com/ZDC3/ds2026-G07-Magnificent-7</p>
+    <p style="margin-top: 15px; font-style: italic;">
+        本报告基于公开数据与标准化分析方法编制，仅供学术研究使用，不构成投资建议。
+    </p>
+</div>
+
+</body>
+</html>
